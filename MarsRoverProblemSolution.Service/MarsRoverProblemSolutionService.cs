@@ -13,7 +13,7 @@ namespace MarsRoverProblemSolution.Service
     public class MarsRoverProblemSolutionService : IMarsRoverProblemSolutionService
     {
         /// <summary>
-        /// 
+        /// instance for Invoker
         /// </summary>
         private Invoker _invoker;
 
@@ -30,7 +30,7 @@ namespace MarsRoverProblemSolution.Service
         }
 
         /// <summary>
-        /// 
+        /// rover movement
         /// </summary>
         /// <param name="maxPoints"></param>
         /// <param name="currentLocation"></param>
@@ -55,25 +55,24 @@ namespace MarsRoverProblemSolution.Service
                 switch (dir)
                 {
                     case 'L':
-                        command = new MoveLeft(coordinates.Dir);
-                        coordinates.Dir = _invoker.StartMoving(command).Dir;
+                        command = new MoveLeft();
                         break;
 
                     case 'R':
-                        command = new MoveRight(coordinates.Dir);
-                        coordinates.Dir = _invoker.StartMoving(command).Dir;
+                        command = new MoveRight();
                         break;
 
                     case 'M':
-                        command = new MoveForward(coordinates.X, coordinates.Y, coordinates.Dir, maxLst);
-                        var c = _invoker.StartMoving(command);
-                        coordinates.X = c.X;
-                        coordinates.Y = c.Y;
+                        command = new MoveForward(maxLst);
                         break;
 
                     default:
                         return null;
                 }
+                var c = _invoker.StartMoving(command, coordinates);
+                coordinates.Dir = c.Dir;
+                coordinates.X = c.X;
+                coordinates.Y = c.Y;
             }
             return coordinates;
         }

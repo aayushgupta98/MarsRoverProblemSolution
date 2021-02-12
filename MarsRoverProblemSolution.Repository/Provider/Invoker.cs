@@ -4,6 +4,12 @@ namespace MarsRoverProblemSolution.Repository.Provider
 {
     public interface Invoker
     {
-        Coordinates StartMoving(Command command);
+        /// <summary>
+        /// start rover movement
+        /// </summary>
+        /// <param name="command"></param>
+        /// <param name="coordinates"></param>
+        /// <returns></returns>
+        Coordinates StartMoving(Command command, Coordinates coordinates);
     }
 }

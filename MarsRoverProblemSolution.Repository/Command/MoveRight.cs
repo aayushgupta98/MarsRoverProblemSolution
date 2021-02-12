@@ -6,28 +6,12 @@ namespace MarsRoverProblemSolution.Repository.Command
     public class MoveRight : Provider.Command
     {
         /// <summary>
-        /// 
-        /// </summary>
-        private Directions direction;
-
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="theDirection"></param>
-        public MoveRight(Directions theDirection)
-        {
-            direction = theDirection;
-        }
-
-        /// <summary>
-        /// 
+        /// execute rotation
         /// </summary>
         /// <returns></returns>
-        public Coordinates Execute()
+        public Coordinates Execute(Coordinates coordinates)
         {
-            var coordinates = new Coordinates();
-            coordinates.Dir = direction;
-            switch (direction)
+            switch (coordinates.Dir)
             {
                 case Directions.N:
                     coordinates.Dir = Directions.E;
