@@ -22,7 +22,7 @@ namespace MarsRoverProblemSolution.Service
         /// </summary>
         /// <param name="services"></param>
         /// <param name="_serviceProvider"></param>
-        private void RegisterServices(ServiceCollection services)
+        public void RegisterServices(ServiceCollection services)
         {
             services.AddSingleton<Invoker, ExecuteAction>();
             var _serviceProvider = services.BuildServiceProvider(true);
@@ -36,9 +36,8 @@ namespace MarsRoverProblemSolution.Service
         /// <param name="currentLocation"></param>
         /// <param name="movement"></param>
         /// <returns></returns>
-        public Coordinates MoveRoverSync(string[] maxPoints, string[] currentLocation, string movement, ServiceCollection services)
+        public Coordinates MoveRoverSync(string[] maxPoints, string[] currentLocation, string movement)
         {
-            var _invoker = new ExecuteAction();
             var maxLst = new List<int>();
             foreach (var m in maxPoints)
             {
@@ -70,7 +69,6 @@ namespace MarsRoverProblemSolution.Service
                     default:
                         return null;
                 }
-                RegisterServices(services);
                 var c = _invoker.StartMoving(command, coordinates);
                 
                 if (c == null)
@@ -81,6 +79,17 @@ namespace MarsRoverProblemSolution.Service
                 coordinates.Y = c.Y;
             }
             return coordinates;
+        }
+
+        //TODO: Remove this method, its only used for unit test purpose
+
+        /// <summary>
+        /// temporarily using this method for making this file unit testable
+        /// </summary>
+        /// <param name="invoker"></param>
+        public void SetInvokerForUnitTest(Invoker invoker)
+        {
+            _invoker = invoker;
         }
     }
 }
