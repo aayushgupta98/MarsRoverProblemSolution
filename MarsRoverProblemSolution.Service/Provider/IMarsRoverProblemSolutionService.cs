@@ -6,11 +6,12 @@ namespace MarsRoverProblemSolution.Service.Provider
     public interface IMarsRoverProblemSolutionService
     {
         /// <summary>
-        /// register services for DI implementation
+        /// rover movement
         /// </summary>
-        /// <param name="services"></param>
-        void RegisterServices(ServiceCollection services);
-
-        Coordinates MoveRoverSync(string[] maxPoints, string[] currentLocation, string movement);
+        /// <param name="maxPoints"></param>
+        /// <param name="currentLocation"></param>
+        /// <param name="movement"></param>
+        /// <returns></returns>
+        Coordinates MoveRoverSync(string[] maxPoints, string[] currentLocation, string movement, ServiceCollection services);
     }
 }
