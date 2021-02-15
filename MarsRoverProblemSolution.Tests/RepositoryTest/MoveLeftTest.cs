@@ -1,5 +1,4 @@
 ﻿using MarsRoverProblemSolution.Data.Constants;
-using MarsRoverProblemSolution.Data.Entities;
 using MarsRoverProblemSolution.Repository.Command;
 using MarsRoverProblemSolution.Repository.Provider;
 using MarsRoverProblemSolution.Tests.MockObjects;
