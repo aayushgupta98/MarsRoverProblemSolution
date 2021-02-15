@@ -34,14 +34,14 @@ namespace MarsRoverProblemSolution.Repository.Command
             {
                 case Directions.N:
                     if (coordinates.Y >= maxLst[1])
-                        RoverCantMove();
+                        coordinates = RoverCantMove();
                     else
                         coordinates.Y += 1;
                     break;
 
                 case Directions.E:
                     if (coordinates.X >= maxLst[0])
-                        RoverCantMove();
+                        coordinates = RoverCantMove();
                     else
                         coordinates.X += 1;
                     break;
@@ -50,14 +50,14 @@ namespace MarsRoverProblemSolution.Repository.Command
                     if (coordinates.Y != 0)
                         coordinates.Y -= 1;
                     else
-                        RoverCantMove();
+                        coordinates = RoverCantMove();
                     break;
 
                 case Directions.W:
                     if (coordinates.X != 0)
                         coordinates.X -= 1;
                     else
-                        RoverCantMove();
+                        coordinates = RoverCantMove();
                     break;
             }
             return coordinates;
@@ -66,9 +66,10 @@ namespace MarsRoverProblemSolution.Repository.Command
         /// <summary>
         /// 
         /// </summary>
-        private void RoverCantMove()
+        private Coordinates RoverCantMove()
         {
             Console.WriteLine("Can't Move");
+            return null;
         }
     }
 }
