@@ -33,35 +33,33 @@ namespace MarsRoverProblemSolution.Tests.RepositoryTest
         [InlineData(Directions.W)]
         public void Execute_Test(Directions directions)
         {
+            //Arrange
             var coordinates = MockData.Coordinates();
-            var result = new Coordinates();
             switch (directions)
             {
                 case Directions.N:
                     coordinates.Dir = Directions.N;
-                    result = _command.Execute(coordinates);
-                    Assert.Equal(Directions.E, result.Dir);
                     break;
 
                 case Directions.E:
                     coordinates.Dir = Directions.E;
-                    result = _command.Execute(coordinates);
-                    Assert.Equal(Directions.S, result.Dir);
                     break;
 
                 case Directions.S:
                     coordinates.Dir = Directions.S;
-                    result = _command.Execute(coordinates);
-                    Assert.Equal(Directions.W, result.Dir);
                     break;
 
                 case Directions.W:
                     coordinates.Dir = Directions.W;
-                    result = _command.Execute(coordinates);
-                    Assert.Equal(Directions.N, result.Dir);
                     break;
             }
+
+            //Act
+            var result = _command.Execute(coordinates);
+
+            //Assert
             Assert.NotNull(result);
+            Assert.Equal(coordinates, result);
         }
     }
 }

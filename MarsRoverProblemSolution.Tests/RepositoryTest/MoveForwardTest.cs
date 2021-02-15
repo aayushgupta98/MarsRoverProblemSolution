@@ -39,8 +39,8 @@ namespace MarsRoverProblemSolution.Tests.RepositoryTest
         [InlineData(Directions.S)]
         public void Execute_Test(Directions directions)
         {
+            //Arrange
             var coordinates = MockData.Coordinates();
-
             switch (directions)
             {
                 case Directions.N:
@@ -59,8 +59,11 @@ namespace MarsRoverProblemSolution.Tests.RepositoryTest
                     coordinates.Dir = Directions.S;
                     break;
             }
+
+            //Act
             var result = _command.Execute(coordinates);
 
+            //Assert
             Assert.NotNull(result);
             Assert.Equal(coordinates, result);
         }
@@ -83,6 +86,7 @@ namespace MarsRoverProblemSolution.Tests.RepositoryTest
         [InlineData(false, false, true, true)]
         public void ExecuteTest_Failure(bool isYExceed, bool isXExceed, bool isYLess, bool isXLess)
         {
+            //Arrange
             var coordinates = MockData.Coordinates();
             if (isYExceed)
             {
@@ -105,8 +109,10 @@ namespace MarsRoverProblemSolution.Tests.RepositoryTest
                 coordinates.Dir = Directions.W;
             }
 
+            //Act
             var result = _command.Execute(coordinates);
 
+            //Assert
             Assert.Null(result);
         }
     }

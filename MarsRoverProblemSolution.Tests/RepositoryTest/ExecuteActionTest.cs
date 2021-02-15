@@ -34,11 +34,14 @@ namespace MarsRoverProblemSolution.Tests.RepositoryTest
         [Fact]
         public void StartMovingSync_Test()
         {
+            //Arrange
             var coordinates = MockData.Coordinates();
             A.CallTo(() => _command.Execute(A<Coordinates>._)).ReturnsLazily(() => coordinates);
 
+            //Act
             var result = _invoker.StartMoving(_command, coordinates);
 
+            //Assert
             Assert.NotNull(result);
             Assert.Equal(result, coordinates);
         }
