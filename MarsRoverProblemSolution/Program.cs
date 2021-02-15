@@ -17,9 +17,8 @@ namespace MarsRoverProblemSolution
             services.AddSingleton<IMarsRoverProblemSolutionService, MarsRoverProblemSolutionService>();
             var _serviceProvider = services.BuildServiceProvider(true);
             var _marsRoverProblemSolutionService = _serviceProvider.GetService<IMarsRoverProblemSolutionService>();
-            _marsRoverProblemSolutionService.RegisterServices(services);
 
-            var coordinates = _marsRoverProblemSolutionService.MoveRoverSync(maxPoints, currentLocation, movement);
+            var coordinates = _marsRoverProblemSolutionService.MoveRoverSync(maxPoints, currentLocation, movement, services);
             if (coordinates != null)
                 Console.WriteLine(coordinates.X + " " + coordinates.Y + " " + coordinates.Dir);
             else
