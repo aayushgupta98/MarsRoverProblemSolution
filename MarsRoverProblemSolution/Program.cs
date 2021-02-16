@@ -1,4 +1,6 @@
-﻿using MarsRoverProblemSolution.Service;
+﻿using MarsRoverProblemSolution.Repository.Invoker;
+using MarsRoverProblemSolution.Repository.Provider;
+using MarsRoverProblemSolution.Service;
 using MarsRoverProblemSolution.Service.Provider;
 using Microsoft.Extensions.DependencyInjection;
 using System;
@@ -15,11 +17,12 @@ namespace MarsRoverProblemSolution
 
             var services = new ServiceCollection();
             services.AddSingleton<IMarsRoverProblemSolutionService, MarsRoverProblemSolutionService>();
+            services.AddSingleton<Invoker, ExecuteAction>();
             var _serviceProvider = services.BuildServiceProvider(true);
             var _marsRoverProblemSolutionService = _serviceProvider.GetService<IMarsRoverProblemSolutionService>();
-            _marsRoverProblemSolutionService.RegisterServices(services);
+            var _invoker = _serviceProvider.GetService<Invoker>();
 
-            var coordinates = _marsRoverProblemSolutionService.MoveRoverSync(maxPoints, currentLocation, movement);
+            var coordinates = _marsRoverProblemSolutionService.MoveRoverSync(maxPoints, currentLocation, movement, _invoker);
             if (coordinates != null)
                 Console.WriteLine(coordinates.X + " " + coordinates.Y + " " + coordinates.Dir);
             else

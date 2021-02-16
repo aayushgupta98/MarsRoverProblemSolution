@@ -32,25 +32,36 @@ namespace MarsRoverProblemSolution.Tests.Service_Test
         /// <summary>
         /// test for MoveRoverSync method
         /// </summary>
-        [Fact]
-        public void MoveRoverSync_Test()
+        [Theory]
+        [InlineData(true)]
+        [InlineData(false)]
+        public void MoveRoverSync_Test(bool isCoordinateNull)
         {
             //Arrange
             var maxPoints = MockData.MaxPoints;
             var currentLocation = MockData.CurrentLocation;
             var movement = MockData.Movement;
             var coordinates = MockData.Coordinates();
-            A.CallTo(() => _invoker.StartMoving(A<Command>._, A<Coordinates>._)).ReturnsLazily(() => coordinates);
-            _marsRoverProblemSolutionService.SetInvokerForUnitTest(_invoker);
+            if (!isCoordinateNull)
+                A.CallTo(() => _invoker.StartMoving(A<Command>._, A<Coordinates>._)).ReturnsLazily(() => coordinates);
+            else
+                A.CallTo(() => _invoker.StartMoving(A<Command>._, A<Coordinates>._)).ReturnsLazily(() => null);
 
             //Act
-            var result = _marsRoverProblemSolutionService.MoveRoverSync(maxPoints, currentLocation, movement);
+            var result = _marsRoverProblemSolutionService.MoveRoverSync(maxPoints, currentLocation, movement, _invoker);
 
             //Assert
-            Assert.NotNull(result);
-            Assert.Equal(coordinates.X, result.X);
-            Assert.Equal(coordinates.Y, result.Y);
-            Assert.Equal(coordinates.Dir, result.Dir);
+            if (!isCoordinateNull)
+            {
+                Assert.NotNull(result);
+                Assert.Equal(coordinates.X, result.X);
+                Assert.Equal(coordinates.Y, result.Y);
+                Assert.Equal(coordinates.Dir, result.Dir);
+            }
+            else
+            {
+                Assert.Null(result);
+            }
         }
     }
 }

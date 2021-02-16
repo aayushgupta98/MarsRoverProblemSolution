@@ -1,10 +1,8 @@
 ﻿using MarsRoverProblemSolution.Data.Constants;
 using MarsRoverProblemSolution.Data.Entities;
 using MarsRoverProblemSolution.Repository.Command;
-using MarsRoverProblemSolution.Repository.Invoker;
 using MarsRoverProblemSolution.Repository.Provider;
 using MarsRoverProblemSolution.Service.Provider;
-using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Collections.Generic;
 
@@ -13,30 +11,13 @@ namespace MarsRoverProblemSolution.Service
     public class MarsRoverProblemSolutionService : IMarsRoverProblemSolutionService
     {
         /// <summary>
-        /// instance for Invoker
-        /// </summary>
-        private Invoker _invoker;
-
-        /// <summary>
-        /// register services for DI implementation
-        /// </summary>
-        /// <param name="services"></param>
-        /// <param name="_serviceProvider"></param>
-        public void RegisterServices(ServiceCollection services)
-        {
-            services.AddSingleton<Invoker, ExecuteAction>();
-            var _serviceProvider = services.BuildServiceProvider(true);
-            _invoker = _serviceProvider.GetService<Invoker>();
-        }
-
-        /// <summary>
         /// rover movement
         /// </summary>
         /// <param name="maxPoints"></param>
         /// <param name="currentLocation"></param>
         /// <param name="movement"></param>
         /// <returns></returns>
-        public Coordinates MoveRoverSync(string[] maxPoints, string[] currentLocation, string movement)
+        public Coordinates MoveRoverSync(string[] maxPoints, string[] currentLocation, string movement, Invoker _invoker)
         {
             var maxLst = new List<int>();
             foreach (var m in maxPoints)
@@ -79,17 +60,6 @@ namespace MarsRoverProblemSolution.Service
                 coordinates.Y = c.Y;
             }
             return coordinates;
-        }
-
-        //TODO: Remove this method, its only used for unit test purpose
-
-        /// <summary>
-        /// temporarily using this method for making this file unit testable
-        /// </summary>
-        /// <param name="invoker"></param>
-        public void SetInvokerForUnitTest(Invoker invoker)
-        {
-            _invoker = invoker;
         }
     }
 }
